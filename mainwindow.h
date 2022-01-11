@@ -2,6 +2,11 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QMessageBox>
+#include <QFileDialog>
+#include <QDebug>
+
+#include "controlador.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -15,7 +20,18 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void on_actionCalcular_triggered();
+    void on_btn_calcular_clicked();
+
+    void on_actionGuardar_triggered();
+
 private:
     Ui::MainWindow *ui;
+    Controlador *m_controlador;
+
+    void limpiar();
+    void calcular();
+    void guardar();
 };
 #endif // MAINWINDOW_H
