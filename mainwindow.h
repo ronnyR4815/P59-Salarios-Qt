@@ -26,6 +26,10 @@ private slots:
 
     void on_actionGuardar_triggered();
 
+    void on_actionNuevo_triggered();
+
+    void on_actionAbrir_triggered();
+
 private:
     Ui::MainWindow *ui;
     Controlador *m_controlador;
@@ -33,5 +37,6 @@ private:
     void limpiar();
     void calcular();
     void guardar();
+    void abrir();
 };
 #endif // MAINWINDOW_H

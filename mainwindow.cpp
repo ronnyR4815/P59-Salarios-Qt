@@ -74,32 +74,73 @@ void MainWindow::guardar()
      * seleccionar una ubicacion para
      * guardar un archivo */
     QString nombreArchivo = QFileDialog::getSaveFileName(this,
-                                                         "Guardar datos",
+                                                         "Guardar archivo",
                                                          QDir::home().absolutePath(),
-                                                         "Archivos de texto (*.txt)");
+                                                         "Archivos de salarios (*.slr)");
     qDebug() << nombreArchivo;
 
     // Crear un objeto QFile
     QFile archivo(nombreArchivo);
     // Abrir archivo para escritura
     if(archivo.open(QFile::WriteOnly | QFile::Truncate)){
+        // Crear un "stream" de texto (flujo)
         QTextStream salida(&archivo);
+        // Enviar los datos del resultado a la salida
         salida << ui->out_resultado->toPlainText();
+        // Mostrar informacion por 3 segundos que todo salio bien
         ui->statusbar->showMessage("Datos almacenados en " + nombreArchivo, 3000);
 
     }else{
+        // Mensaje de error si no se puede abrir el archivo
         QMessageBox::warning(
                     this,
                     "Guardar informacion",
                     "No se pudo guardar la informacion");
     }
+    // Cerrar el archivo
+    archivo.close();
+}
+
+void MainWindow::abrir()
+{
+    /* Abrir cuadro de dialogo para
+     * seleccionar una ubicacion para
+     * guardar un archivo */
+    QString nombreArchivo = QFileDialog::getOpenFileName(this,
+                                                         "Abrir archivo",
+                                                         QDir::home().absolutePath(),
+                                                         "Archivos de salarios (*.slr)");
+    qDebug() << nombreArchivo;
+
+    // Crear un objeto QFile
+    QFile archivo(nombreArchivo);
+    // Abrir archivo para escritura
+    if(archivo.open(QFile::ReadOnly)){
+        // Crear un "stream" de texto (flujo)
+        QTextStream entrada(&archivo);
+        // Leer todo el contenido del archivo
+        QString datos = entrada.readAll();
+        // Cargar el contenido al area de texto
+        ui->out_resultado->clear();
+        ui->out_resultado->setPlainText(datos);
+        // Mostrar informacion por 3 segundos que todo salio bien
+        ui->statusbar->showMessage("Datos almacenados en " + nombreArchivo, 3000);
+
+    }else{
+        // Mensaje de error si no se puede abrir el archivo
+        QMessageBox::warning(
+                    this,
+                    "Abrir archivo",
+                    "No se pudo abrir el archivo");
+    }
+    // Cerrar el archivo
+    archivo.close();
 }
 
 void MainWindow::on_actionCalcular_triggered()
 {
     calcular();
 }
-
 
 void MainWindow::on_btn_calcular_clicked()
 {
@@ -109,5 +150,16 @@ void MainWindow::on_btn_calcular_clicked()
 void MainWindow::on_actionGuardar_triggered()
 {
     guardar();
+}
+
+void MainWindow::on_actionNuevo_triggered()
+{
+    limpiar();
+    ui->out_resultado->clear();
+}
+
+void MainWindow::on_actionAbrir_triggered()
+{
+    abrir();
 }
 
