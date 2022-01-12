@@ -7,6 +7,9 @@
 #include <QDebug>
 
 #include "controlador.h"
+#include "acercade.h"
+
+#define VERSION "0.2"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -29,6 +32,10 @@ private slots:
     void on_actionNuevo_triggered();
 
     void on_actionAbrir_triggered();
+
+    void on_actionAcerca_de_triggered();
+
+    void on_actionSalir_triggered();
 
 private:
     Ui::MainWindow *ui;

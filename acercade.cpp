@@ -12,3 +12,14 @@ Acercade::~Acercade()
 {
     delete ui;
 }
+
+void Acercade::setVersion(const QString &newVersion)
+{
+    m_version = newVersion;
+    ui->title->setText("Salarios " + m_version);
+}
+
+void Acercade::setValor(int newValor)
+{
+    valor = newValor;
+}

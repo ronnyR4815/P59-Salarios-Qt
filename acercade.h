@@ -15,8 +15,14 @@ public:
     explicit Acercade(QWidget *parent = nullptr);
     ~Acercade();
 
+    void setVersion(const QString &newVersion);
+
+    void setValor(int newValor);
+
 private:
     Ui::Acercade *ui;
+    QString m_version;
+    int valor;
 };
 
 #endif // ACERCADE_H

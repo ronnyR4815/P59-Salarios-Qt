@@ -110,7 +110,6 @@ void MainWindow::abrir()
                                                          "Abrir archivo",
                                                          QDir::home().absolutePath(),
                                                          "Archivos de salarios (*.slr)");
-    qDebug() << nombreArchivo;
 
     // Crear un objeto QFile
     QFile archivo(nombreArchivo);
@@ -161,5 +160,23 @@ void MainWindow::on_actionNuevo_triggered()
 void MainWindow::on_actionAbrir_triggered()
 {
     abrir();
+}
+
+
+void MainWindow::on_actionAcerca_de_triggered()
+{
+    // Crear objeto de la ventana que queremos invocar
+    Acercade *dialogo = new Acercade(this);
+    // Enviar parametro a ventana
+    dialogo->setVersion(VERSION);
+    // Mostrar ventana de dialogo MODAL
+    dialogo->exec();
+    // Obtener datos del dialogo
+
+}
+
+void MainWindow::on_actionSalir_triggered()
+{
+    exit(0);
 }
 
