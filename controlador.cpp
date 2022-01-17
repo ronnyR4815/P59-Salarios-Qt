@@ -3,6 +3,9 @@
 Controlador::Controlador(QObject *parent) : QObject(parent)
 {
     this->m_obrero = nullptr;
+    this->m_total_SalBruto = 0;
+    this->m_total_IESS = 0;
+    this->m_total_SalNeto = 0;
 }
 
 bool Controlador::agregarObrero(QString nombre, int horas, TipoJornada jornada)
@@ -51,6 +54,11 @@ bool Controlador::calcularSalario()
     // Calculo del salario neto (a recibir)
     double salarioNeto = salarioBruto - descuento;
 
+    // Calcular totales
+    m_total_SalBruto += salarioBruto;
+    m_total_IESS += descuento;
+    m_total_SalNeto += salarioNeto;
+
     // Establecer valores al objeto
     m_obrero->setSalarioBruto(salarioBruto);
     m_obrero->setDescuento(descuento);
@@ -62,4 +70,34 @@ bool Controlador::calcularSalario()
 Obrero *Controlador::obrero() const
 {
     return m_obrero;
+}
+
+double Controlador::total_SalBruto() const
+{
+    return m_total_SalBruto;
+}
+
+double Controlador::total_IESS() const
+{
+    return m_total_IESS;
+}
+
+double Controlador::total_SalNeto() const
+{
+    return m_total_SalNeto;
+}
+
+void Controlador::setTotal_SalBruto(double newTotal_SalBruto)
+{
+    m_total_SalBruto = newTotal_SalBruto;
+}
+
+void Controlador::setTotal_IESS(double newTotal_IESS)
+{
+    m_total_IESS = newTotal_IESS;
+}
+
+void Controlador::setTotal_SalNeto(double newTotal_SalNeto)
+{
+    m_total_SalNeto = newTotal_SalNeto;
 }

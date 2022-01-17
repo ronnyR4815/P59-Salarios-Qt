@@ -54,10 +54,17 @@ void MainWindow::calcular()
 
     // Calcular
     if (m_controlador->calcularSalario()){
+        // Imprimir en el cuadro de texto
         ui->out_resultado->appendPlainText(m_controlador->obrero()->toString());
+
+        /* Calculo totales */
+        ui->out_sal_bruto->setText(QString::number(m_controlador->total_SalBruto()));
+        ui->out_IESS->setText(QString::number(m_controlador->total_IESS()));
+        ui->out_sal_neto->setText(QString::number(m_controlador->total_SalNeto()));
+
         // Limpiar la interfaz
         limpiar();
-        ui->statusbar->showMessage("Calculos procesados para " + nombre, 2000);
+        ui->statusbar->showMessage("Calculos procesados para " + nombre, 3000);
 
     }else{
         QMessageBox::critical(
@@ -75,7 +82,7 @@ void MainWindow::guardar()
      * guardar un archivo */
     QString nombreArchivo = QFileDialog::getSaveFileName(this,
                                                          "Guardar archivo",
-                                                         QDir::home().absolutePath(),
+                                                         QDir::home().absoluteFilePath("downloads"),
                                                          "Archivos de salarios (*.slr)");
     qDebug() << nombreArchivo;
 
@@ -87,6 +94,10 @@ void MainWindow::guardar()
         QTextStream salida(&archivo);
         // Enviar los datos del resultado a la salida
         salida << ui->out_resultado->toPlainText();
+        salida << "\n---------------------------\n\n";
+        salida << "# Salario BRUTO total: $" << ui->out_sal_bruto->text() << endl;
+        salida << "# Descuento IESS: $" << ui->out_IESS->text() << endl;
+        salida << "# Salario NETO total: $" << ui->out_sal_neto->text() << endl;
         // Mostrar informacion por 3 segundos que todo salio bien
         ui->statusbar->showMessage("Datos almacenados en " + nombreArchivo, 3000);
 
@@ -108,7 +119,7 @@ void MainWindow::abrir()
      * guardar un archivo */
     QString nombreArchivo = QFileDialog::getOpenFileName(this,
                                                          "Abrir archivo",
-                                                         QDir::home().absolutePath(),
+                                                         QDir::home().absoluteFilePath("downloads"),
                                                          "Archivos de salarios (*.slr)");
 
     // Crear un objeto QFile
@@ -155,13 +166,20 @@ void MainWindow::on_actionNuevo_triggered()
 {
     limpiar();
     ui->out_resultado->clear();
+    // Colocar valores de 0 en los LineEdit
+    ui->out_sal_bruto->setText("0.00");
+    ui->out_IESS->setText("0.00");
+    ui->out_sal_neto->setText("0.00");
+    // Inicializar en 0 las variables originales
+    m_controlador->setTotal_SalBruto(0);
+    m_controlador->setTotal_IESS(0);
+    m_controlador->setTotal_SalNeto(0);
 }
 
 void MainWindow::on_actionAbrir_triggered()
 {
     abrir();
 }
-
 
 void MainWindow::on_actionAcerca_de_triggered()
 {
@@ -172,7 +190,6 @@ void MainWindow::on_actionAcerca_de_triggered()
     // Mostrar ventana de dialogo MODAL
     dialogo->exec();
     // Obtener datos del dialogo
-
 }
 
 void MainWindow::on_actionSalir_triggered()

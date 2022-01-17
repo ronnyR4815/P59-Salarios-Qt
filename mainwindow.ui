@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>511</width>
-    <height>315</height>
+    <width>565</width>
+    <height>319</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,12 +18,12 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>300</width>
+    <width>550</width>
     <height>0</height>
    </size>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Calculadora Salarios</string>
   </property>
   <property name="windowIcon">
    <iconset resource="resources.qrc">
@@ -33,6 +33,24 @@
    <layout class="QHBoxLayout" name="horizontalLayout_2">
     <item>
      <widget class="QWidget" name="widget" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>250</width>
+        <height>16777215</height>
+       </size>
+      </property>
       <property name="font">
        <font>
         <family>MS Shell Dlg 2</family>
@@ -49,7 +67,7 @@
            <number>0</number>
           </property>
           <item row="0" column="0">
-           <widget class="QLabel" name="label">
+           <widget class="QLabel" name="lbl_nombre">
             <property name="text">
              <string>Nombre:</string>
             </property>
@@ -63,7 +81,7 @@
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QLabel" name="label_2">
+           <widget class="QLabel" name="lbl_horas">
             <property name="text">
              <string>Horas:</string>
             </property>
@@ -168,6 +186,12 @@
     </item>
     <item>
      <widget class="QWidget" name="widget_2" native="true">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
+      </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
         <widget class="QPlainTextEdit" name="out_resultado">
@@ -177,6 +201,75 @@
          <property name="placeholderText">
           <string>Infomacion de los obreros...</string>
          </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="widget_5" native="true">
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="out_sal_neto">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(214, 214, 214);</string>
+            </property>
+            <property name="text">
+             <string>0.00</string>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="out_sal_bruto">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(214, 214, 214);</string>
+            </property>
+            <property name="text">
+             <string>0.00</string>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="out_IESS">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(214, 214, 214);</string>
+            </property>
+            <property name="text">
+             <string>0.00</string>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="lbl_IESS">
+            <property name="text">
+             <string>Total IESS</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="lbl_sneto">
+            <property name="text">
+             <string>Total Salario Neto</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="lbl_sbruto">
+            <property name="text">
+             <string>Total Salario Bruto</string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
       </layout>
@@ -189,7 +282,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>511</width>
+     <width>565</width>
      <height>20</height>
     </rect>
    </property>
