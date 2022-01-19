@@ -84,7 +84,6 @@ void MainWindow::guardar()
                                                          "Guardar archivo",
                                                          QDir::home().absoluteFilePath("downloads"),
                                                          "Archivos de salarios (*.slr)");
-    qDebug() << nombreArchivo;
 
     // Crear un objeto QFile
     QFile archivo(nombreArchivo);
@@ -94,10 +93,10 @@ void MainWindow::guardar()
         QTextStream salida(&archivo);
         // Enviar los datos del resultado a la salida
         salida << ui->out_resultado->toPlainText();
-        salida << "\n---------------------------\n\n";
-        salida << "# Salario BRUTO total: $" << ui->out_sal_bruto->text() << endl;
-        salida << "# Descuento IESS: $" << ui->out_IESS->text() << endl;
-        salida << "# Salario NETO total: $" << ui->out_sal_neto->text() << endl;
+        salida << "\n---------------------------\n";
+        salida << ui->out_sal_bruto->text() << endl;
+        salida << ui->out_IESS->text() << endl;
+        salida << ui->out_sal_neto->text() << endl;
         // Mostrar informacion por 3 segundos que todo salio bien
         ui->statusbar->showMessage("Datos almacenados en " + nombreArchivo, 3000);
 
@@ -125,14 +124,30 @@ void MainWindow::abrir()
     // Crear un objeto QFile
     QFile archivo(nombreArchivo);
     // Abrir archivo para escritura
-    if(archivo.open(QFile::ReadOnly)){
+    if(archivo.open(QFile::ReadOnly | QFile::Text)){
         // Crear un "stream" de texto (flujo)
         QTextStream entrada(&archivo);
         // Leer todo el contenido del archivo
-        QString datos = entrada.readAll();
+        QString datos = "", total_bruto = "",
+                total_IESS = "", total_neto = "";
+
+        while(!entrada.atEnd()){
+            datos += entrada.readLine() + "\n";
+            if(datos.contains("-")){
+                total_bruto = entrada.readLine();
+                total_IESS = entrada.readLine();
+                total_neto = entrada.readLine();
+            }
+        }
+
         // Cargar el contenido al area de texto
         ui->out_resultado->clear();
         ui->out_resultado->setPlainText(datos);
+        // Cargar contenido a los LineEdit totales
+        ui->out_sal_bruto->setText(total_bruto);
+        ui->out_IESS->setText(total_IESS);
+        ui->out_sal_neto->setText(total_neto);
+
         // Mostrar informacion por 3 segundos que todo salio bien
         ui->statusbar->showMessage("Datos almacenados en " + nombreArchivo, 3000);
 
